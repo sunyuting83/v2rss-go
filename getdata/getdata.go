@@ -12,6 +12,7 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
+// Vary is v2ray json sturct
 type Vary struct {
 	Version string `json:"v"`
 	Host    string `json:"host"`
