@@ -76,11 +76,15 @@ func MakeList(d string) []string {
 			other = strings.Contains(item, "?remarks=")
 			if other {
 				strsss := strings.Split(item, "?remarks=")
-				var strtobyte []byte = []byte(strsss[0])
-				decodeBytes := make([]byte, base64.StdEncoding.DecodedLen(len(strtobyte))) // 计算解码后的长度
-				base64.StdEncoding.Decode(decodeBytes, strtobyte)
+				// var strtobyte []byte = []byte(strsss[0])
+				// decodeBytes := make([]byte, base64.StdEncoding.DecodedLen(len(strtobyte))) // 计算解码后的长度
+				// base64.StdEncoding.Decode(decodeBytes, strtobyte)
+				codes, err := base64.RawStdEncoding.DecodeString(strsss[0])
+				if err != nil {
+					return x
+				}
 
-				newstr := string(decodeBytes[:])
+				newstr := string(codes)
 				// fmt.Println(newstr)
 				blen := len(newstr)
 				a := strings.Index(newstr, ":")
@@ -89,10 +93,6 @@ func MakeList(d string) []string {
 				uuid := newstr[a+1 : b]
 				host := newstr[b+1 : c]
 				port := newstr[c+1 : blen]
-
-				if port == "4" || port == "44" {
-					port = "443"
-				}
 
 				params := strsss[1]
 				plen := len(params)
@@ -118,7 +118,7 @@ func MakeList(d string) []string {
 				// fmt.Println(uuid, host, port, param, path, obfs, tls)
 				// log.Println(uuid, host, port, param, path, obfs, tls)
 				cumv := strconv.Itoa(i)
-				myname := strings.Join([]string{"我的节点", cumv}, "-")
+				myname := strings.Join([]string{"公益节点", cumv}, "-")
 				vjson := &Vary{
 					Version: "2",
 					Host:    host,
