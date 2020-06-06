@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "start..."
-export PATH=/sbin:/bin:/usr/bin:/usr/local/bin
 basepath=$(cd `dirname $0`; pwd)
+export PATH=$basepath:/sbin:/bin:/usr/bin:/usr/local/bin
 pidpath="$basepath/v2rss.pid"
 if [ -f $pidpath ]; then
   pid=`cat $pidpath`
