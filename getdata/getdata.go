@@ -3,6 +3,7 @@ package getdata
 import (
 	"encoding/base64"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"regexp"
@@ -96,49 +97,66 @@ func MakeList(d string) []string {
 
 				params := strsss[1]
 				plen := len(params)
-				e := strings.Index(params, "path=")
-				f := strings.Index(params, "obfs=")
-				g := strings.Index(params, "tls=")
-				path := params[e+5 : f-1]
-				obfs := params[f+5 : g-1]
-				tls := params[g+4 : plen]
+				if !strings.Contains(params, "obfsParam=") {
+					fmt.Println(params)
+					f := strings.Index(params, "obfs=")
 
-				if obfs == "websocket" {
-					obfs = "ws"
-				} else {
-					obfs = "tcp"
-				}
+					var (
+						e    int
+						g    int
+						path string
+						tls  string
+						obfs string
+					)
+					if strings.Contains(params, "path=") {
+						e = strings.Index(params, "path=")
+						path = params[e+5 : f-1]
+					}
+					if strings.Contains(params, "tls=") {
+						g = strings.Index(params, "tls=")
+						tls = params[g+4 : plen]
+						obfs = params[f+5 : g-1]
+					} else {
+						obfs = params[f+5 : plen]
+					}
 
-				if tls == "1" {
-					tls = "tls"
-				} else {
-					tls = "tcp"
-				}
+					if obfs == "websocket" {
+						obfs = "ws"
+					} else {
+						obfs = "tcp"
+					}
 
-				// fmt.Println(uuid, host, port, param, path, obfs, tls)
-				// log.Println(uuid, host, port, param, path, obfs, tls)
-				cumv := strconv.Itoa(i)
-				myname := strings.Join([]string{"公益节点", cumv}, "-")
-				vjson := &Vary{
-					Version: "2",
-					Host:    host,
-					Path:    path,
-					TLS:     tls,
-					Ps:      myname,
-					Add:     host,
-					Prot:    port,
-					ID:      uuid,
-					Aid:     "1",
-					Net:     obfs,
-					Type:    "null",
+					if tls == "1" {
+						tls = "tls"
+					} else {
+						tls = "tcp"
+					}
+
+					// fmt.Println(uuid, host, port, param, path, obfs, tls)
+					// log.Println(uuid, host, port, param, path, obfs, tls)
+					cumv := strconv.Itoa(i)
+					myname := strings.Join([]string{"公益节点", cumv}, "-")
+					vjson := &Vary{
+						Version: "2",
+						Host:    host,
+						Path:    path,
+						TLS:     tls,
+						Ps:      myname,
+						Add:     host,
+						Prot:    port,
+						ID:      uuid,
+						Aid:     "1",
+						Net:     obfs,
+						Type:    "null",
+					}
+					bytes, err := json.Marshal(vjson)
+					if err != nil {
+						return x
+					}
+					// fmt.Println(string(bytes))
+					v = strings.Join([]string{"vmess:", base64.StdEncoding.EncodeToString(bytes)}, "//")
+					x = append(x, v)
 				}
-				bytes, err := json.Marshal(vjson)
-				if err != nil {
-					return x
-				}
-				// fmt.Println(string(bytes))
-				v = strings.Join([]string{"vmess:", base64.StdEncoding.EncodeToString(bytes)}, "//")
-				x = append(x, v)
 			} else {
 				decodeBytes, err := base64.StdEncoding.DecodeString(item)
 				if err != nil {
