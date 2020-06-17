@@ -3,7 +3,6 @@ package getdata
 import (
 	"encoding/base64"
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 	"regexp"
@@ -141,7 +140,7 @@ func MakeList(d string) []string {
 					obfsParam = host
 				}
 				// fmt.Println(uuid, host, port, path, obfs, tls)
-				fmt.Println(host, obfs, obfsParam)
+				// fmt.Println(host, obfs, obfsParam)
 				// log.Println(uuid, host, port, param, path, obfs, tls)
 				cumv := strconv.Itoa(i)
 				myname := strings.Join([]string{"公益节点", cumv}, "-")
