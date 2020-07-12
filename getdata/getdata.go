@@ -8,6 +8,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"fmt"
 
 	"github.com/PuerkitoBio/goquery"
 )
@@ -28,10 +29,11 @@ type Vary struct {
 }
 
 // ExampleScrape get telegarm v2list page data
-func ExampleScrape(count string, cors bool) (string, bool) {
+func ExampleScrape(count string, cors bool, tow bool) (string, bool) {
 	// Request the HTML page.
 	var c int
 	var err error
+	var findthis string
 	c, err = strconv.Atoi(count)
 	var url string
 	url = "https://t.me/s/V2List"
@@ -56,7 +58,15 @@ func ExampleScrape(count string, cors bool) (string, bool) {
 	}
 	root := doc.Find("body.widget_frame_base > main.tgme_main > div.tgme_container > section.tgme_channel_history > div.tgme_widget_message_wrap")
 	length := root.Length()
-	findthis := root.Eq(length - c).Find("div.tgme_widget_message_text").Text()
+	if tow {
+		findthis = root.Eq(length - c).Find("div.tgme_widget_message_text").Text()
+	}else{
+		findthis1 := root.Eq(length - (c + 1)).Find("div.tgme_widget_message_text").Text()
+		findthis2 := root.Eq(length - c).Find("div.tgme_widget_message_text").Text()
+		fmt.Println(findthis1)
+		fmt.Println(findthis2)
+		findthis = strings.Join([]string{findthis1, findthis2}, "")
+	}
 	return findthis, true
 }
 
@@ -190,10 +200,10 @@ func MakeData(d []string) string {
 }
 
 // Start this
-func Start(n string, w bool) string {
+func Start(n string, w bool, i bool) string {
 	var d []string
 	var dd string = ""
-	data, status := ExampleScrape(n, w)
+	data, status := ExampleScrape(n, w, i)
 	if status {
 		d = MakeList(data)
 		dd = MakeData(d)
