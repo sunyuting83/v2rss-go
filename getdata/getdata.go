@@ -8,7 +8,6 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
-	"fmt"
 
 	"github.com/PuerkitoBio/goquery"
 )
@@ -63,8 +62,8 @@ func ExampleScrape(count string, cors bool, tow bool) (string, bool) {
 	}else{
 		findthis1 := root.Eq(length - (c + 1)).Find("div.tgme_widget_message_text").Text()
 		findthis2 := root.Eq(length - c).Find("div.tgme_widget_message_text").Text()
-		fmt.Println(findthis1)
-		fmt.Println(findthis2)
+		// fmt.Println(findthis1)
+		// fmt.Println(findthis2)
 		findthis = strings.Join([]string{findthis1, findthis2}, "")
 	}
 	return findthis, true
@@ -149,24 +148,29 @@ func MakeList(d string) []string {
 				if len(obfsParam) <= 0 {
 					obfsParam = host
 				}
-				// fmt.Println(uuid, host, port, path, obfs, tls)
+				if strings.Index(obfsParam, "/") == 0 {
+					path = obfsParam
+					obfsParam = host
+				}
+				// fmt.Println(uuid, host, port, path, obfs, tls, obfsParam)
 				// fmt.Println(host, obfs, obfsParam)
 				// log.Println(uuid, host, port, param, path, obfs, tls)
 				cumv := strconv.Itoa(i)
 				myname := strings.Join([]string{"公益节点", cumv}, "-")
 				vjson := &Vary{
 					Version: "2",
-					Host:    host,
+					Host:    obfsParam,
 					Path:    path,
 					TLS:     tls,
 					Ps:      myname,
-					Add:     obfsParam,
+					Add:     host,
 					Prot:    port,
 					ID:      uuid,
 					Aid:     "1",
 					Net:     obfs,
 					Type:    "null",
 				}
+				// fmt.Println(vjson)
 				bytes, err := json.Marshal(vjson)
 				if err != nil {
 					return x
