@@ -2,6 +2,8 @@ package main
 
 import (
 	"flag"
+	"fmt"
+	"strconv"
 	"strings"
 	getdata "v2rss/getdata"
 
@@ -16,15 +18,16 @@ func main() {
 	app := gin.Default()
 	app.GET("/", func(c *gin.Context) {
 		var x bool = false
-		var y bool = true
+		var y int = 0
 		var n string = c.DefaultQuery("n", "1")
 		var w string = c.DefaultQuery("w", "0")
 		var i string = c.DefaultQuery("i", "0")
 		if w == "1" {
 			x = true
 		}
-		if i == "1" {
-			y = false
+		y, err := strconv.Atoi(i)
+		if err != nil {
+			fmt.Println("err")
 		}
 		// fmt.Println(x, n, w)
 		var data string = getdata.Start(n, x, y)

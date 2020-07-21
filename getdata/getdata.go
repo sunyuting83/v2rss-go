@@ -3,6 +3,7 @@ package getdata
 import (
 	"encoding/base64"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"regexp"
@@ -28,7 +29,7 @@ type Vary struct {
 }
 
 // ExampleScrape get telegarm v2list page data
-func ExampleScrape(count string, cors bool, tow bool) (string, bool) {
+func ExampleScrape(count string, cors bool, tow int) (string, bool) {
 	// Request the HTML page.
 	var c int
 	var err error
@@ -57,15 +58,15 @@ func ExampleScrape(count string, cors bool, tow bool) (string, bool) {
 	}
 	root := doc.Find("body.widget_frame_base > main.tgme_main > div.tgme_container > section.tgme_channel_history > div.tgme_widget_message_wrap")
 	length := root.Length()
-	if tow {
+	if tow <= 0 {
 		findthis = root.Eq(length - c).Find("div.tgme_widget_message_text").Text()
-	}else{
-		findthis1 := root.Eq(length - (c + 1)).Find("div.tgme_widget_message_text").Text()
-		findthis2 := root.Eq(length - c).Find("div.tgme_widget_message_text").Text()
-		// fmt.Println(findthis1)
-		// fmt.Println(findthis2)
-		findthis = strings.Join([]string{findthis1, findthis2}, "")
+	} else {
+		for ; tow > 0; tow-- {
+			fmt.Println(tow)
+			findthis += root.Eq(length - (c + tow)).Find("div.tgme_widget_message_text").Text()
+		}
 	}
+	fmt.Println(findthis)
 	return findthis, true
 }
 
@@ -204,7 +205,7 @@ func MakeData(d []string) string {
 }
 
 // Start this
-func Start(n string, w bool, i bool) string {
+func Start(n string, w bool, i int) string {
 	var d []string
 	var dd string = ""
 	data, status := ExampleScrape(n, w, i)
