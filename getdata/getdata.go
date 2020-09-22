@@ -3,7 +3,6 @@ package getdata
 import (
 	"encoding/base64"
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 	"regexp"
@@ -61,12 +60,13 @@ func ExampleScrape(count string, cors bool, tow int) (string, bool) {
 	if tow <= 0 {
 		findthis = root.Eq(length - c).Find("div.tgme_widget_message_text").Text()
 	} else {
-		for ; tow > 0; tow-- {
-			fmt.Println(tow)
+		for ; tow >= 0; tow-- {
+			// fmt.Println(c + tow)
 			findthis += root.Eq(length - (c + tow)).Find("div.tgme_widget_message_text").Text()
+			// fmt.Println(findthis)
 		}
 	}
-	fmt.Println(findthis)
+	// fmt.Println(findthis)
 	return findthis, true
 }
 
@@ -132,7 +132,11 @@ func MakeList(d string) []string {
 
 				if strings.Contains(params, "obfsParam=") {
 					o = strings.Index(params, "obfsParam=")
-					obfsParam = params[o+10 : e-1]
+					if strings.Contains(params, "path=") {
+						obfsParam = params[o+10 : e-1]
+					}else{
+						obfsParam = params[o+10 : strings.Index(params, "&obfs=") - 1]
+					}
 				}
 
 				if obfs == "websocket" {
