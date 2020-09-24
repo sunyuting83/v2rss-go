@@ -3,4 +3,5 @@ test.go
 run.log
 v2rss.pid
 v2.zip
-docker-compose.yml
+v2rss_x86_64.zip
+v2rss.exe

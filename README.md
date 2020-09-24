@@ -63,4 +63,12 @@ systemctl stop v2rss
 systemctl restart v2rss  
 ```
 
+- Win版使用说明
+> 下载v2rss_x86_64.zip 并解压。双击运行。
+在v2ray客户端订阅处填入订阅地址：
+http://localhost:3000/?w=1&n=1
+必须加w参数，用于国内访问。
+其他参数请看说明文件
+订阅成功后关闭窗口即可
+
 ##### 注：如使用其他端口，修改启动文件start.sh -p参数后面的端口号
