@@ -3,3 +3,4 @@ test.go
 run.log
 v2rss.pid
 v2.zip
+docker-compose.yml
