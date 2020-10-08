@@ -6,3 +6,6 @@ v2.zip
 v2rss_x86_64.zip
 v2rss.exe
 docker-compose.yml
+v2rss-linux-x86_64.tar.gz
+v2rss.service
+v2rss.sh
