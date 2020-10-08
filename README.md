@@ -3,6 +3,16 @@
 ### 说明
 通过爬取免费v2ray链接分享，自动生成订阅链接
 
+### Linux一键安装脚本
+```
+curl https://raw.githubusercontent.com/sunyuting83/v2rss-go/master/install.sh |bash
+```
+> 一键脚本监听端口5500
+### Linux一键卸载脚本
+```
+curl https://raw.githubusercontent.com/sunyuting83/v2rss-go/master/uninstall.sh |bash
+```
+
 ### 使用
 从releases下载最新版本的v2rss.zip 已经编译好版本，然后执行：
 ```bash
