@@ -37,7 +37,7 @@ func ExampleScrape(count string, cors bool, tow int) (string, bool) {
 	var url string
 	url = "https://t.me/s/V2List"
 	if cors {
-		url = strings.Join([]string{"https://cors.zme.ink", url}, "/")
+		url = strings.Join([]string{"https://cors.izumana.ml", url}, "/?url=")
 	}
 	// fmt.Println(url)
 	res, err := http.Get(url)
@@ -71,13 +71,11 @@ func ExampleScrape(count string, cors bool, tow int) (string, bool) {
 }
 
 // MakeList use split to make a array for string
-func MakeList(d string) []string {
-	x := []string{}
+func MakeList(d string) (x []string) {
 	l := strings.Split(d, "vmess://")
 	for i, item := range l {
-		var l int
-		l = len(item)
-		if l > 0 {
+		var itemLen int
+		if itemLen > 0 {
 			var strHaiCoder string
 			var newstr string
 			var v string
@@ -134,8 +132,8 @@ func MakeList(d string) []string {
 					o = strings.Index(params, "obfsParam=")
 					if strings.Contains(params, "path=") {
 						obfsParam = params[o+10 : e-1]
-					}else{
-						obfsParam = params[o+10 : strings.Index(params, "&obfs=") - 1]
+					} else {
+						obfsParam = params[o+10 : strings.Index(params, "&obfs=")-1]
 					}
 				}
 
@@ -184,21 +182,24 @@ func MakeList(d string) []string {
 				v = strings.Join([]string{"vmess:", base64.StdEncoding.EncodeToString(bytes)}, "//")
 				x = append(x, v)
 
-			} else {
-				decodeBytes, err := base64.StdEncoding.DecodeString(item)
-				if err != nil {
-					return x
-				}
-				strHaiCoder = `"ps" :"翻墙党fanqiangdang.com","" :`
-				reg := regexp.MustCompile(strHaiCoder)
-				newstr = reg.ReplaceAllString(string(decodeBytes), `"ps" :`)
-				var strtobyte []byte = []byte(newstr)
-				v = strings.Join([]string{"vmess:", base64.StdEncoding.EncodeToString(strtobyte)}, "//")
-				x = append(x, v)
 			}
+			var str []byte = []byte(item)
+			decodeBytes := make([]byte, base64.StdEncoding.DecodedLen(len(str))) // 计算解码后的长度
+			base64.StdEncoding.Decode(decodeBytes, str)
+			// decodeBytes, err := base64.RawURLEncoding.DecodeString(item)
+			// if err != nil {
+			// 	fmt.Println(err)
+			// 	return x
+			// }
+			strHaiCoder = `"ps" :"翻墙党fanqiangdang.com","" :`
+			reg := regexp.MustCompile(strHaiCoder)
+			newstr = reg.ReplaceAllString(string(decodeBytes), `"ps" :`)
+			var strtobyte []byte = []byte(newstr)
+			v = strings.Join([]string{"vmess:", base64.StdEncoding.EncodeToString(strtobyte)}, "//")
+			x = append(x, v)
 		}
 	}
-	return x
+	return
 }
 
 // MakeData is a make Array to BASE64 string function
