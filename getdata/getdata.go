@@ -39,7 +39,6 @@ func ExampleScrape(count string, cors bool, tow int) (string, bool) {
 	if cors {
 		url = strings.Join([]string{"https://cors.izumana.ml", url}, "/?url=")
 	}
-	// fmt.Println(url)
 	res, err := http.Get(url)
 	if err != nil {
 		return "bad", false
@@ -75,6 +74,7 @@ func MakeList(d string) (x []string) {
 	l := strings.Split(d, "vmess://")
 	for i, item := range l {
 		var itemLen int
+		itemLen = len(item)
 		if itemLen > 0 {
 			var strHaiCoder string
 			var newstr string
@@ -84,9 +84,6 @@ func MakeList(d string) (x []string) {
 			other = strings.Contains(item, "?remarks=")
 			if other {
 				strsss := strings.Split(item, "?remarks=")
-				// var strtobyte []byte = []byte(strsss[0])
-				// decodeBytes := make([]byte, base64.StdEncoding.DecodedLen(len(strtobyte))) // 计算解码后的长度
-				// base64.StdEncoding.Decode(decodeBytes, strtobyte)
 				codes, err := base64.RawStdEncoding.DecodeString(strsss[0])
 				if err != nil {
 					return x
@@ -186,11 +183,6 @@ func MakeList(d string) (x []string) {
 			var str []byte = []byte(item)
 			decodeBytes := make([]byte, base64.StdEncoding.DecodedLen(len(str))) // 计算解码后的长度
 			base64.StdEncoding.Decode(decodeBytes, str)
-			// decodeBytes, err := base64.RawURLEncoding.DecodeString(item)
-			// if err != nil {
-			// 	fmt.Println(err)
-			// 	return x
-			// }
 			strHaiCoder = `"ps" :"翻墙党fanqiangdang.com","" :`
 			reg := regexp.MustCompile(strHaiCoder)
 			newstr = reg.ReplaceAllString(string(decodeBytes), `"ps" :`)
