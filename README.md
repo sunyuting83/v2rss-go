@@ -3,6 +3,14 @@
 ### 说明
 通过爬取免费v2ray链接分享，自动生成订阅链接
 
+### 更新日志
+- 添加Linux一键部署、卸载脚本（Nginx自行配置）
+- 修复base64编码bug导致的数据返回异常
+- 原CORS项目地址：[cors.zme.ink](https://github.com/netnr/workers)，请多多给些star鼓励作者。
+- 使用新的CORS，CloudFlare Works部署，用于前端跨域， 项目地址：[cors-anywhere-cfworker](https://github.com/sunyuting83/cors-anywhere-cfworker)。希望同学们建立自己的cf worker并重新打包，分散压力。
+
+> 一点想法。。有计划把CORS做成Array通过jsDelivr访问，每次随即取CORS地址分散压力。但需要更多人搭建cfworker，并提pr来充实Array
+
 ### Linux一键安装脚本
 ```
 curl https://raw.githubusercontent.com/sunyuting83/v2rss-go/master/install.sh |bash
