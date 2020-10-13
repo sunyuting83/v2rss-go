@@ -15,7 +15,7 @@ func main() {
 	var port string
 	flag.StringVar(&port, "p", "3000", "端口号，默认为3000")
 	flag.Parse()
-	app := gin.Default()
+	app := gin.New()
 	app.GET("/", func(c *gin.Context) {
 		var x bool = false
 		var y int = 0
