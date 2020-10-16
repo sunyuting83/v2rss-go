@@ -14,7 +14,7 @@ start_step() {
 
 tmp_dir="/tmp/v2rss"
 v2rss_file="$tmp_dir/v2rss-linux-x86_64.tar.gz"
-v2rss_download="https://github.com/sunyuting83/v2rss-go/releases/download/v1.0.0/v2rss-linux-x86_64.tar.gz"
+v2rss_download="https://github.com/sunyuting83/v2rss-go/releases/download/v1.0.2/v2rss-linux-x86_64.tar.gz"
 
 read -p "Please enter root password: " -s rootPassword
 start_step '1. 安装zip'
