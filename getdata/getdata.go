@@ -1,6 +1,7 @@
 package getdata
 
 import (
+	"bytes"
 	"encoding/base64"
 	"encoding/json"
 	"log"
@@ -76,10 +77,11 @@ func MakeList(d string) (x []string) {
 		var itemLen int
 		itemLen = len(item)
 		if itemLen > 0 {
-			var strHaiCoder string
-			var newstr string
-			var v string
-			var other bool
+			var (
+				newstr string
+				v      string
+				other  bool
+			)
 
 			other = strings.Contains(item, "?remarks=")
 			if other {
@@ -183,10 +185,10 @@ func MakeList(d string) (x []string) {
 			var str []byte = []byte(item)
 			decodeBytes := make([]byte, base64.StdEncoding.DecodedLen(len(str))) // 计算解码后的长度
 			base64.StdEncoding.Decode(decodeBytes, str)
-			strHaiCoder = `"ps" :"翻墙党fanqiangdang.com","" :`
-			reg := regexp.MustCompile(strHaiCoder)
-			newstr = reg.ReplaceAllString(string(decodeBytes), `"ps" :`)
-			var strtobyte []byte = []byte(newstr)
+			reg := regexp.MustCompile(`"ps" :"翻墙党fanqiangdang.com","" :`)
+			newstr = reg.ReplaceAllString(string(decodeBytes), `"ps":`)
+			bjson := StrToJsons(newstr)
+			var strtobyte []byte = []byte(jsonToStr(bjson))
 			v = strings.Join([]string{"vmess:", base64.StdEncoding.EncodeToString(strtobyte)}, "//")
 			x = append(x, v)
 		}
@@ -211,4 +213,30 @@ func Start(n string, w bool, i int) string {
 		dd = MakeData(d)
 	}
 	return dd
+}
+
+// jsonToStr fun
+func jsonToStr(d *Vary) (result string) {
+	resultByte, errError := json.Marshal(&d)
+	result = string(resultByte)
+	if errError != nil {
+		return result
+	}
+	return result
+}
+
+// StrToJsons fun
+func StrToJsons(s string) (result *Vary) {
+	var (
+		a     []byte = []byte(s)
+		index int    = len(a)
+	)
+	index = bytes.IndexByte(a, 0)
+	if index != -1 {
+		a = a[:index]
+	}
+	if err := json.Unmarshal(a, &result); err != nil {
+		return
+	}
+	return
 }
