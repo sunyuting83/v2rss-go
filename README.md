@@ -4,10 +4,14 @@
 通过爬取免费v2ray链接分享，自动生成订阅链接
 
 ### 更新日志
-- 添加Linux一键部署、卸载脚本（Nginx自行配置）
+##### 2020/10/16
+- 修复str转byte含有空数据导致的base64编码失败
+##### 2020/10/13
 - 修复base64编码bug导致的数据返回异常
 - 原CORS项目地址：[cors.zme.ink](https://github.com/netnr/workers)，请多多给些star鼓励作者。
 - 使用新的CORS，CloudFlare Works部署，用于前端跨域， 项目地址：[cors-anywhere-cfworker](https://github.com/sunyuting83/cors-anywhere-cfworker)。希望同学们建立自己的cf worker并重新打包，分散压力。
+##### 2020/10/8
+- 添加Linux一键部署、卸载脚本（Nginx自行配置）
 
 ### Linux一键安装脚本
 ```
