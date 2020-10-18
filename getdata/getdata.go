@@ -172,7 +172,6 @@ func MakeList(d string) (x []string) {
 					Net:     obfs,
 					Type:    "null",
 				}
-				// fmt.Println(vjson)
 				bytes, err := json.Marshal(vjson)
 				if err != nil {
 					return x
@@ -181,16 +180,20 @@ func MakeList(d string) (x []string) {
 				v = strings.Join([]string{"vmess:", base64.StdEncoding.EncodeToString(bytes)}, "//")
 				x = append(x, v)
 
+			} else {
+				var str []byte = []byte(item)
+				decodeBytes := make([]byte, base64.StdEncoding.DecodedLen(len(str))) // 计算解码后的长度
+				base64.StdEncoding.Decode(decodeBytes, str)
+				reg := regexp.MustCompile(`"ps" :"翻墙党fanqiangdang.com","" :`)
+				newstr = reg.ReplaceAllString(string(decodeBytes), `"ps":`)
+				if !strings.Contains(newstr, "}") {
+					newstr = strings.Join([]string{newstr, "}"}, "")
+				}
+				bjson := StrToJsons(newstr)
+				var strtobyte []byte = []byte(jsonToStr(bjson))
+				v = strings.Join([]string{"vmess:", base64.StdEncoding.EncodeToString(strtobyte)}, "//")
+				x = append(x, v)
 			}
-			var str []byte = []byte(item)
-			decodeBytes := make([]byte, base64.StdEncoding.DecodedLen(len(str))) // 计算解码后的长度
-			base64.StdEncoding.Decode(decodeBytes, str)
-			reg := regexp.MustCompile(`"ps" :"翻墙党fanqiangdang.com","" :`)
-			newstr = reg.ReplaceAllString(string(decodeBytes), `"ps":`)
-			bjson := StrToJsons(newstr)
-			var strtobyte []byte = []byte(jsonToStr(bjson))
-			v = strings.Join([]string{"vmess:", base64.StdEncoding.EncodeToString(strtobyte)}, "//")
-			x = append(x, v)
 		}
 	}
 	return
