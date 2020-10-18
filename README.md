@@ -4,6 +4,8 @@
 通过爬取免费v2ray链接分享，自动生成订阅链接
 
 ### 更新日志
+##### 2020/10/18
+- 添加Docker部署方式
 ##### 2020/10/16
 - 修复str转byte含有空数据导致的base64编码失败
 ##### 2020/10/13
@@ -12,6 +14,17 @@
 - 使用新的CORS，CloudFlare Works部署，用于前端跨域， 项目地址：[cors-anywhere-cfworker](https://github.com/sunyuting83/cors-anywhere-cfworker)。希望同学们建立自己的cf worker并重新打包，分散压力。
 ##### 2020/10/8
 - 添加Linux一键部署、卸载脚本（Nginx自行配置）
+
+### Docker部署
+#### 拉镜像
+```
+sudo docker pull v2rss/v2rss
+```
+#### 起容器
+```
+sudo docker run --name v2rss --net=host -d v2rss/v2rss
+```
+> Docker部署默认监听端口5500
 
 ### Linux一键安装脚本
 ```
