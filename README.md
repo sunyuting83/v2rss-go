@@ -1,5 +1,7 @@
 # V2ray RSS
 ---
+# 最近tg频道不更新了，请大家使用[PPS](https://github.com/sqeven/pps)这个优秀的项目吧
+---
 ### 说明
 通过爬取免费v2ray链接分享，自动生成订阅链接
 
