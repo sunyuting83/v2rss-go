@@ -1,6 +1,9 @@
 # V2ray RSS
 ---
-# 最近tg频道不更新了，请大家使用[PPS](https://github.com/sqeven/pps)这个优秀的项目吧
+# 最近tg频道不更新了
+# 请大家使用[PPS](https://github.com/sqeven/pps)这个优秀的项目吧
+# 或者直接用[这个](https://github.com/freefq/free)订阅，国内可以使用[cf worker](https://github.com/netnr/workers)反代获取数据
+# V2ray客户端推荐：[Qv2ray](https://github.com/Qv2ray/Qv2ray)
 ---
 ### 说明
 通过爬取免费v2ray链接分享，自动生成订阅链接
