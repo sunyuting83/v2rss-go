@@ -190,7 +190,7 @@ func MakeList(d string) (data string) {
 
 // MakeData is a make Array to BASE64 string function
 func MakeData(d []string) string {
-	var data string = strings.Join(d[:], "\n")
+	var data string = strings.Join(d[:], "")
 	var strtobyte []byte = []byte(data)
 	return base64.StdEncoding.EncodeToString(strtobyte)
 }
