@@ -4,9 +4,8 @@ import (
 	"bytes"
 	"encoding/base64"
 	"encoding/json"
-	"fmt"
+	"io"
 	"log"
-	"net/http"
 	"regexp"
 	"strconv"
 	"strings"
@@ -30,30 +29,15 @@ type Vary struct {
 }
 
 // ExampleScrape get telegarm v2list page data
-func ExampleScrape(count string, cors bool, tow int) (string, bool) {
+func ExampleScrape(count string, cors bool, tow int, data io.Reader) (string, bool) {
 	// Request the HTML page.
 	var c int
 	var err error
 	var findthis string
 	c, err = strconv.Atoi(count)
-	var url string
-	url = "https://t.me/s/V2List"
-	// sub = ["https://github.com/du5/free/","https://github.com/ssrsub/ssr/blob/master/v2ray","https://raw.githubusercontent.com/freefq/free/master/v2","https://raw.githubusercontent.com/cdp2020/v2ray/master/README.md","https://jiang.netlify.com/"]
-	if cors {
-		url = strings.Join([]string{"https://cors.izumana.ml", url}, "/?url=")
-	}
-	res, err := http.Get(url)
-	if err != nil {
-		return "bad", false
-	}
-	defer res.Body.Close()
-	if res.StatusCode != 200 {
-		// log.Fatalf("status code error: %d %s", res.StatusCode, res.Status)
-		return res.Status, false
-	}
 
 	// Load the HTML document
-	doc, err := goquery.NewDocumentFromReader(res.Body)
+	doc, err := goquery.NewDocumentFromReader(data)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -73,7 +57,8 @@ func ExampleScrape(count string, cors bool, tow int) (string, bool) {
 }
 
 // MakeList use split to make a array for string
-func MakeList(d string) (x []string) {
+func MakeList(d string) (data string) {
+	var x []string
 	l := strings.Split(d, "vmess://")
 	for i, item := range l {
 		var itemLen int
@@ -90,7 +75,7 @@ func MakeList(d string) (x []string) {
 				strsss := strings.Split(item, "?remarks=")
 				codes, err := base64.RawStdEncoding.DecodeString(strsss[0])
 				if err != nil {
-					return x
+					return ""
 				}
 
 				newstr := string(codes)
@@ -176,7 +161,7 @@ func MakeList(d string) (x []string) {
 				}
 				bytes, err := json.Marshal(vjson)
 				if err != nil {
-					return x
+					return ""
 				}
 				// fmt.Println(string(bytes))
 				v = strings.Join([]string{"vmess:", base64.StdEncoding.EncodeToString(bytes)}, "//")
@@ -200,7 +185,7 @@ func MakeList(d string) (x []string) {
 			}
 		}
 	}
-	return
+	return strings.Join(x, "\n")
 }
 
 // MakeData is a make Array to BASE64 string function
@@ -212,20 +197,10 @@ func MakeData(d []string) string {
 
 // Start this
 func Start(n string, w bool, i int) string {
-	var (
-		d      []string
-		dd     string = ""
-		urList []*Config
-	)
+	var urList []*Config
 	urList = GetConfig(w)
-	x := SyncGetData(urList)
-	fmt.Println(x)
-	data, status := ExampleScrape(n, w, i)
-	if status {
-		d = MakeList(data)
-		dd = MakeData(d)
-	}
-	return dd
+	x := SyncGetData(urList, n, w, i)
+	return MakeData(x)
 }
 
 // jsonToStr fun

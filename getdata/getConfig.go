@@ -13,7 +13,7 @@ type Config struct {
 // GetConfig get config
 func GetConfig(cors bool) (c []*Config) {
 
-	var list = []string{"https://raw.githubusercontent.com/ssrsub/ssr/master/v2ray", "https://raw.githubusercontent.com/freefq/free/master/v2", "https://raw.githubusercontent.com/cdp2020/v2ray/master/README.md", "https://jiang.netlify.com/", "https://t.me/s/V2List"}
+	var list = []string{"https://raw.githubusercontent.com/ssrsub/ssr/master/v2ray", "https://raw.githubusercontent.com/freefq/free/master/v2", "https://raw.githubusercontent.com/cdp2020/v2ray/master/README.md", "https://t.me/s/V2List"}
 	var (
 		types string = "sub"
 	)
