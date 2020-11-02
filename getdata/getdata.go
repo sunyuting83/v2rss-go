@@ -37,6 +37,7 @@ func ExampleScrape(count string, cors bool, tow int) (string, bool) {
 	c, err = strconv.Atoi(count)
 	var url string
 	url = "https://t.me/s/V2List"
+	// sub = ["https://github.com/du5/free/","https://github.com/ssrsub/ssr/blob/master/v2ray","https://raw.githubusercontent.com/freefq/free/master/v2","https://raw.githubusercontent.com/cdp2020/v2ray/master/README.md","https://jiang.netlify.com/"]
 	if cors {
 		url = strings.Join([]string{"https://cors.izumana.ml", url}, "/?url=")
 	}
@@ -190,9 +191,11 @@ func MakeList(d string) (x []string) {
 					newstr = strings.Join([]string{newstr, "}"}, "")
 				}
 				bjson := StrToJsons(newstr)
-				var strtobyte []byte = []byte(jsonToStr(bjson))
-				v = strings.Join([]string{"vmess:", base64.StdEncoding.EncodeToString(strtobyte)}, "//")
-				x = append(x, v)
+				if bjson != nil {
+					var strtobyte []byte = []byte(jsonToStr(bjson))
+					v = strings.Join([]string{"vmess:", base64.StdEncoding.EncodeToString(strtobyte)}, "//")
+					x = append(x, v)
+				}
 			}
 		}
 	}
