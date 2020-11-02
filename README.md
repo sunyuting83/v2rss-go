@@ -1,14 +1,19 @@
 # V2ray RSS
 ---
-# 最近tg频道不更新了
-# 请大家使用[PPS](https://github.com/sqeven/pps)这个优秀的项目吧
-# 或者直接用[这个](https://github.com/freefq/free)订阅，国内可以使用[cf worker](https://github.com/netnr/workers)反代获取数据
-# V2ray客户端推荐：[Qv2ray](https://github.com/Qv2ray/Qv2ray)
+##### V2ray客户端推荐：[Qv2ray](https://github.com/Qv2ray/Qv2ray)
 ---
 ### 说明
 通过爬取免费v2ray链接分享，自动生成订阅链接
 
 ### 更新日志
+##### 2020/11/2
+- 最近tg频道不更新了
+- (删仓了)~~~请大家使用[PPS](https://github.com/sqeven/pps)这个优秀的项目吧~~~
+- 聚合了3个订阅地址
+- - [cdp2020](https://github.com/cdp2020/v2ray)
+- - [freefq](https://github.com/freefq/free)
+- - [ssrsub](https://github.com/ssrsub/ssr/tree/master)~~~更新慢或停更了~~~
+- 最好使用[cf worker](https://github.com/netnr/workers)直接反代上面的项目raw地址获取数据
 ##### 2020/10/18
 - 添加Docker部署方式
 - 修复空数据
