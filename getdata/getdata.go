@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/base64"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"regexp"
@@ -211,8 +212,14 @@ func MakeData(d []string) string {
 
 // Start this
 func Start(n string, w bool, i int) string {
-	var d []string
-	var dd string = ""
+	var (
+		d      []string
+		dd     string = ""
+		urList []*Config
+	)
+	urList = GetConfig(w)
+	x := SyncGetData(urList)
+	fmt.Println(x)
 	data, status := ExampleScrape(n, w, i)
 	if status {
 		d = MakeList(data)
