@@ -14,7 +14,7 @@ start_step() {
 
 tmp_dir="/tmp/v2rss"
 v2rss_file="$tmp_dir/v2rss-linux-x86_64.tar.gz"
-v2rss_download="https://github.com/sunyuting83/v2rss-go/releases/download/v1.0.2/v2rss-linux-x86_64.tar.gz"
+v2rss_download="https://github.com/sunyuting83/v2rss-go/releases/download/v2.0.0/v2rss-linux-x86_64.tar.gz"
 
 read -p "Please enter root password: " -s rootPassword
 start_step '1. 安装zip'
@@ -43,6 +43,7 @@ fi
 echo "$rootPassword" | sudo -S install -Dm755 $tmp_dir/v2rss /usr/bin/v2rss &&
 echo "$rootPassword" | sudo -S install -Dm644 $tmp_dir/v2rss.service /usr/lib/systemd/system/v2rss.service &&
 echo "$rootPassword" | sudo -S install -Dm777 $tmp_dir/v2rss.sh /etc/v2rss/v2rss.sh &&
+echo "$rootPassword" | sudo -S install -Dm777 $tmp_dir/v2list /etc/v2rss/v2list &&
 echo "$rootPassword" | sudo -S systemctl enable v2rss &&
 echo "$rootPassword" | sudo -S systemctl daemon-reload &&
 echo "$rootPassword" | sudo -S systemctl start v2rss &&

@@ -9,3 +9,4 @@ docker-compose.yml
 v2rss-linux-x86_64.tar.gz
 v2rss.service
 v2rss.sh
+v2list

@@ -10,11 +10,22 @@ V2ray客户端推荐：[Qv2ray](https://github.com/Qv2ray/Qv2ray)
 (删仓了) ~~~请大家使用[PPS](https://github.com/xyzjhe/pps)这个优秀的项目吧~~~
 
 ### 更新日志
+##### 2020/11/4
+- 使用并发爬取多个url
+- 修改install.sh
+- 增加新版Docker镜像
+- 增加自定义url列表
+> 列表规则
+```
+# 修改 /etc/v2rss/v2list
+加入订阅地址，每行一个，必须是完整网址(包含 http:// or https://)
+# 启动参数加入 -c 例：
+v2rss -p 5500 -c /etc/v2rss/v2list
+```
 ##### 2020/11/2
-- 聚合了3个订阅地址
+- 聚合了2个订阅地址
 - - [cdp2020](https://github.com/cdp2020/v2ray)
 - - [freefq](https://github.com/freefq/free)
-- - [ssrsub(更新慢或停更了)](https://github.com/ssrsub/ssr/tree/master)
 - 最好使用[cf worker](https://github.com/netnr/workers)直接反代上面的项目raw地址获取数据
 ##### 2020/10/18
 - 添加Docker部署方式
@@ -31,26 +42,33 @@ V2ray客户端推荐：[Qv2ray](https://github.com/Qv2ray/Qv2ray)
 ### Docker部署
 #### 拉镜像
 ```
-sudo docker pull v2rss/v2rss
+sudo docker pull v2rss/v2rss:beta
 ```
 #### 起容器
 ```
-sudo docker run --name v2rss --net=host -d v2rss/v2rss
+# 默认启动
+sudo docker run --name v2rss:beta --net=host -d v2rss/v2rss
+
+# 自定义url列表启动
+sudo docker run --name v2rss:beta --net=host -v /yourPath/configFile:/home/v2list -d v2rss/v2rss
 ```
 > Docker部署默认监听端口5500
 
 ### Linux一键安装脚本
 ```
-curl https://raw.githubusercontent.com/sunyuting83/v2rss-go/master/install.sh |bash
+curl https://raw.githubusercontent.com/sunyuting83/v2rss-go/dev/install.sh |bash
 ```
 > 一键脚本监听端口5500
 ### Linux一键卸载脚本
 ```
-curl https://raw.githubusercontent.com/sunyuting83/v2rss-go/master/uninstall.sh |bash
+curl https://raw.githubusercontent.com/sunyuting83/v2rss-go/dev/uninstall.sh |bash
 ```
 
 ### 启动参数说明
--p 监听端口号
+| 参数  | 说明 | 默认值 |
+| ------------ | ------------ | ------------ |
+| -p | 监听端口号 | 3000 |
+| -c | URL列表路径 | 无(使用程序内默认列表) |
 
 #### 参数说明
 浏览器访问 http://localhost:5500/?i=1&w=0&n=1
