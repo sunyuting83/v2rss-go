@@ -196,9 +196,9 @@ func MakeData(d []string) string {
 }
 
 // Start this
-func Start(n string, w bool, i int) string {
+func Start(n string, w bool, i int, c string) string {
 	var urList []*Config
-	urList = GetConfig(w)
+	urList = GetConfig(w, c)
 	x := SyncGetData(urList, n, w, i)
 	return MakeData(x)
 }

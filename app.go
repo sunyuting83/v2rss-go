@@ -12,8 +12,12 @@ import (
 
 func main() {
 	gin.SetMode(gin.ReleaseMode)
-	var port string
+	var (
+		port   string
+		config string
+	)
 	flag.StringVar(&port, "p", "3000", "端口号，默认为3000")
+	flag.StringVar(&config, "c", "", "配置文件，默认空")
 	flag.Parse()
 	app := gin.New()
 	app.GET("/", func(c *gin.Context) {
@@ -30,7 +34,7 @@ func main() {
 			fmt.Println("err")
 		}
 		// fmt.Println(x, n, w)
-		var data string = getdata.Start(n, x, y)
+		var data string = getdata.Start(n, x, y, config)
 		c.String(200, data)
 	})
 	app.Run(strings.Join([]string{":", port}, ""))
