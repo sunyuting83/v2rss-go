@@ -17,7 +17,7 @@ func GetConfig(cors bool, config string) (c []*Config) {
 	if config != "" {
 		list = GetConfigFile(config)
 	} else {
-		list = []string{"https://raw.githubusercontent.com/ssrsub/ssr/master/v2ray", "https://raw.githubusercontent.com/freefq/free/master/v2", "https://raw.githubusercontent.com/cdp2020/v2ray/master/README.md", "https://t.me/s/V2List"}
+		list = []string{"https://t.me/ivmess", "https://t.me/s/V2List"}
 	}
 	var (
 		types string = "sub"
