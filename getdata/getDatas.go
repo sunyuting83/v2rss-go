@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 	"io/ioutil"
 	"net/http"
+	"strings"
 	"sync"
 )
 
@@ -39,7 +40,8 @@ func SyncGetData(list []*Config, n string, w bool, tow int) (d []string) {
 					if index != -1 {
 						codes = codes[:index]
 					}
-					d = append(d, string(codes))
+					newCode := strings.Join([]string{string(codes), "\n"}, "")
+					d = append(d, newCode)
 				} else {
 					data, status := ExampleScrape(n, w, tow, res.Body)
 					if status {
