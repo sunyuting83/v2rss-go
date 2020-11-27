@@ -18,7 +18,8 @@ V2ray客户端推荐：[Qv2ray](https://github.com/Qv2ray/Qv2ray)
 > 列表规则
 ```
 # 修改 /etc/v2rss/v2list
-加入订阅地址，每行一个，必须是完整网址(包含 http:// or https://)
+加入订阅地址，每行一个，必须是完整网址(包含 http:// or https://)。
+订阅地址放到上面，tg频道放到下面
 # 启动参数加入 -c 例：
 v2rss -p 5500 -c /etc/v2rss/v2list
 ```
